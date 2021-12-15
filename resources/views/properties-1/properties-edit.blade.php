@@ -412,8 +412,10 @@
                                                 </div>
                                                 <div class="modal-body">
 
-                                                    <input type='file' id="imgInp" name="pictures[]" accept="image/*"
+                                                    <input type='file' name="pictures[]" accept="image/*"
                                                         multiple />
+                                                        {{-- <input type='file' id="imgInp" name="pictures[]" accept="image/*"
+                                                        multiple /> --}}
                                                     @if ($errors->has('pictures'))
                                                         <span class="invalid-feedback" style="display: block;" role="alert">
                                                             <strong>{{ $errors->first('pictures') }}</strong>
@@ -597,7 +599,7 @@
                                             <label for="validationTextarea">Observações</label>
                                             <textarea class="form-control" id="validationTextarea"
                                                 placeholder="Observações gerais do ativo"
-                                                name="feedback">{{ $properties->feedback }}</textarea>
+                                                name="feedback">{{ old('feedback') }}</textarea>
 
                                         </div>
                                         @if ($errors->has('feedback'))

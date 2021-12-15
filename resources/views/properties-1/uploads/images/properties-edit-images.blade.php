@@ -29,26 +29,6 @@
             /* z-index: 1; //this make the carousel-control unclickable */
         }
 
-        .container-table {
-            padding: 2rem 0rem;
-        }
-
-        h4 {
-            margin: 2rem 0rem 1rem;
-        }
-
-        .img-fluid:hover {
-            transform: scale(1.5);
-        }
-
-        .table-image {
-
-            td,
-            th {
-                vertical-align: middle;
-            }
-        }
-
     </style>
 
     <div class="container-fluid mt--7">
@@ -88,50 +68,68 @@
 
                                 <div class="form-group">
                                     <label for="name">Nome do Ativo</label>
-                                    <input type="text" class="form-control" id="name"
-                                        placeholder="Insira o nome do ativo." name="name" value="{{ $properties->name }}"
-                                        readonly>
+                                    <input type="text" class="form-control" id="name" placeholder="Insira o nome do ativo."
+                                        name="name" value="{{ $properties->name }}" readonly>
                                 </div>
+
 
                                 <hr>
 
-                                <div class="table-responsive container-table">
-                                    <table class="table align-items-center">
-                                        <thead class="thead-light">
-                                            <tr>
-                                                <th scope="col">Imagem</th>
-                                                <th scope="col">Nome</th>
-                                                <th scope="col">Ações</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($properties->images as $picture)
-                                                <tr>
-                                                    <th scope="row">
-                                                        <div class="media align-items-center w-75">
-                                                            <img src="{{ env('APP_URL') }}/storage/{{ $picture->path }}"
-                                                                class="img-fluid img-thumbnail table-image"
-                                                                alt="Ativo_{{ $picture->id }}"
-                                                                style="height: auto; width:100%;">
-                                                        </div>
-                                                    </th>
-                                                    <td>
-                                                        {{ $picture->path }}
-                                                    </td>
-                                                    <td>
-                                                        <a href="{{ route('properties.edit.images.remove', $picture->id) }}"
-                                                            class="btn btn-outline-warning"><i
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                            <ol class="carousel-indicators">
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="0"
+                                                    class="active">
+                                                </li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                                                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                                            </ol>
+                                            <div class="carousel-inner">
+                                                @foreach ($properties->images as $picture)
+                                                    <div class="item active text-center">
+                                                        <a href="{{ route('properties.edit.images.remove', $picture->id) }}" class="btn btn-outline-light myButton"><i
                                                                 class="fas fa-times"></i></a>
-                                                    </td>
-                                                </tr>
+                                                    </div>
+                                                    @if ($loop->first)
+                                                        <div class="carousel-item active">
+                                                        @else
+                                                            <div class="carousel-item">
+                                                    @endif
+                                                    <img src="{{ env('APP_URL') }}/storage/{{ $picture->path }}"
+                                                        class="d-block rounded img-fluid" alt="Ativo_{{ $picture->id }}"
+                                                        style="height: auto; width:100%;">
+                                            </div>
                                             @endforeach
-
-                                        </tbody>
-                                    </table>
+                                            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button"
+                                                data-slide="prev">
+                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button"
+                                                data-slide="next">
+                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                <span class="sr-only">Next</span>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>                           
-                        </form>
 
+
+                            </div>
+                            <div class="container">
+                                <div class="text-start">
+                                    <button type="button" class="btn btn-primary btn-outline-primary mt-4"><i
+                                            class="fas fa-check" aria-hidden="true"></i>
+                                        {{ __(' Gravar Ativo') }}</button>
+                                    <a href="{{ route('properties') }}" class="btn btn-primary btn-outline-primary mt-4"
+                                        type="button">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                        <span class="btn-inner--text">Cancelar</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
                         <hr class="my-4" />
                     </div>
                 </div>
@@ -170,6 +168,7 @@
                         console.log('Deu Erro: ' + e.message)
                 })
         })
+
     </script>
     <script>
         $(function() {
@@ -179,5 +178,6 @@
             $('#areatotal').maskMoney();
             $('#areaconstruida').maskMoney();
         })
+
     </script>
 @endsection
